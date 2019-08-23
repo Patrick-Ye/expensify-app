@@ -4,6 +4,4 @@ const store = createStore((state = { count: 0}) => {
   return state;
 });
 
-this.ListeningStateChangedEvent((prevState) => {
-
-});
+console.log(store.getState());
