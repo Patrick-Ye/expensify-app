@@ -5,3 +5,12 @@ const store = createStore((state = { count: 0}) => {
 });
 
 console.log(store.getState());
+
+{
+  type: 'INCREMENT'
+}
+
+
+
+
+console.log(store.getState());
