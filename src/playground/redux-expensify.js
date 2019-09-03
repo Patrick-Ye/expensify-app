@@ -2,7 +2,8 @@ import { createStore, combineReducers } from 'redux';
 import uuid from 'uuid';
 // ADD_EXPENSE
 const addExpense = (
-    { description = '', 
+    { 
+      description = '', 
       note = '', 
       amount = 0, 
       createAt = 0 
@@ -18,6 +19,10 @@ const addExpense = (
   }
 });
 // REMOVE_EXPENSE
+const removeExpense = ( { id } = {}) => ({
+  type: 'REMOVE_EXPENSE',
+  id
+});
 // EDIT_EXPENSE
 // SET_TEXT_FILTER
 // SORT_BY_DATE
@@ -32,10 +37,12 @@ const expensesReducerDefaultState = [];
 const expensesReducer = (state = expensesReducerDefaultState, action) => {
   switch (action.type) {
     case 'ADD_EXPENSE':
-        return [
-          ...state,
-          action.expense
-        ];
+      return [
+        ...state,
+        action.expense
+      ];
+    case 'REMOVE_EXPENSE':
+      return state.filter(({ id }) => id !== action.id);
     default:
       return state;
   }
@@ -66,8 +73,12 @@ store.subscribe(() => {
   console.log(store.getState());
 })
 
-store.dispatch(addExpense({ description: 'Rent', amount: 100 }));
-store.dispatch(addExpense({ description: 'Coffee', amount: 300 }));
+const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100 }));
+const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 300 }));
+
+store.dispatch(removeExpense({ id:expenseOne.expense.id }));
+
+console.log(expenseOne);
 
 const demoState = {
   expenses: [{
